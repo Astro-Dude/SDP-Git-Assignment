@@ -1,0 +1,171 @@
+GIT COMMANDS USED IN THIS ASSIGNMENT
+====================================
+Repository: https://github.com/Astro-Dude/SDP-Git-Assignment
+
+
+STEP 1: LOCAL REPOSITORY SETUP
+------------------------------
+mkdir SDP-Git-Assignment
+    Creates the project folder on the local machine (index.html and about.html were added to it).
+
+cd SDP-Git-Assignment
+    Moves into the project folder so all Git commands run inside it.
+
+ls -l
+    Lists the files in the folder, confirming index.html and about.html are present.
+
+git init -b main
+    Initializes a new, empty Git repository in the current folder with "main" as the default branch.
+
+git config user.name "Shaurya Verma"
+    Sets the author name recorded on commits for this repository only.
+
+git config user.email "sagittariusshaurya5@gmail.com"
+    Sets the author email recorded on commits for this repository only.
+
+git status
+    Shows the current branch and which files are untracked, modified or staged.
+
+
+STEP 2: GIT WORKFLOW EXECUTION
+------------------------------
+git add index.html about.html
+    Stages the two HTML files so they are included in the next commit.
+
+git commit -m "Initial commit: add index.html and about.html"
+    Records the initial state of the project as the first commit.
+
+git status
+    Shows that index.html has been modified but not yet staged.
+
+git diff
+    Shows line-by-line changes in the working directory that are not yet staged
+    (used to view the edits made to index.html, and later to about.html on feature).
+
+git add index.html
+    Stages the modified index.html.
+
+git commit -m "Update index.html with an introduction paragraph"
+    Creates the second commit containing the change to index.html.
+
+git branch feature
+    Creates a new branch named "feature" pointing at the current commit.
+
+git checkout feature
+    Switches the working directory to the "feature" branch.
+
+git branch
+    Lists all local branches; the current branch is marked with "*".
+
+git add about.html
+    Stages the changes made to about.html on the feature branch.
+
+git commit -m "Add features section to about.html (feature branch)"
+    Commits the change to the feature branch only (main is not affected).
+
+git checkout main
+    Switches back to the main branch.
+
+git merge --no-ff feature -m "Merge branch feature into main"
+    Merges the feature branch into main. --no-ff forces a merge commit so the
+    branch activity stays visible in the history.
+
+git log --oneline --graph --all --decorate
+    Displays the full commit history as a compact graph showing all branches,
+    the merge point and where each branch points.
+
+git log --graph --all --decorate
+    Displays the detailed history (full hash, author, date and message) of every commit.
+
+
+STEP 3: .gitignore IMPLEMENTATION
+---------------------------------
+cat .gitignore
+    Displays the contents of the .gitignore file (it ignores *.log files and the temp/ folder).
+
+mkdir temp
+echo 'scratch notes' > temp/notes.txt
+echo 'debug output' > debug.log
+    Create a temp/ folder and a .log file to test that .gitignore works.
+
+ls -a
+    Lists all files including hidden ones (.git, .gitignore, debug.log, temp).
+
+git status --ignored
+    Shows the status including ignored files, proving debug.log and temp/ are ignored.
+
+git add .gitignore
+    Stages the .gitignore file.
+
+git commit -m "Add .gitignore to ignore .log files and temp/ folder"
+    Commits the .gitignore file to the repository.
+
+git status
+    Shows a clean working tree: debug.log and temp/ are not reported because they are ignored.
+
+
+STEP 4: UNDO OPERATION
+----------------------
+git add index.html
+    Stages an extra (unwanted) change made to index.html.
+
+git commit -m "Add temporary footer comment to index.html"
+    Makes the additional commit that will be undone.
+
+git log --oneline -3
+    Shows the last 3 commits in one line each, to view the state before the undo.
+
+tail -3 index.html
+    Shows the last 3 lines of index.html (used before and after the undo to show its effect).
+
+git revert --no-edit HEAD
+    Undoes the last commit by creating a new commit that reverses its changes.
+    History is preserved, so it is safe for commits that are pushed/shared.
+
+git log --oneline -4
+    Shows the history after the undo: the original commit and the "Revert" commit.
+
+git status
+    Confirms the working tree is clean after the revert.
+
+(Alternative, not used here) git reset --hard HEAD~1
+    Would delete the last commit from history entirely; avoided because it rewrites
+    history and the undo would not be visible on GitHub.
+
+
+STEP 5: GITHUB INTEGRATION
+--------------------------
+gh repo create SDP-Git-Assignment --public --description 'Git and GitHub workflow assignment'
+    Creates a new public repository on GitHub using the GitHub CLI
+    (equivalent to clicking "New repository" on github.com).
+
+git remote add origin https://github.com/Astro-Dude/SDP-Git-Assignment.git
+    Connects the local repository to the GitHub repository under the name "origin".
+
+git remote -v
+    Lists the configured remotes and their URLs to verify the connection.
+
+git push -u origin main
+    Uploads the main branch and its full history to GitHub and sets origin/main as
+    the upstream for future pushes/pulls.
+
+git push origin feature
+    Uploads the feature branch to GitHub so the branch is visible there as well.
+
+git branch -a
+    Lists local and remote-tracking branches, confirming main and feature exist on origin.
+
+
+STEP 6: COMMAND DOCUMENTATION
+-----------------------------
+git add git_commands.txt
+    Stages this documentation file.
+
+git commit -m "Add git_commands.txt documenting all Git commands used"
+    Commits this documentation file to the repository.
+
+git push
+    Pushes the new commit to GitHub (upstream was already set by "git push -u").
+
+git log --oneline --graph --all --decorate
+    Displays the final commit history including all steps.
